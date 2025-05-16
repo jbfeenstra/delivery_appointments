@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,10 +57,10 @@
         <h2>Schedule a Truck Delivery</h2>
         <form id="deliveryForm">
             <label for="companyName">Trucking Company:</label>
-            <option id="companyName" required>
-             <input type="text" id="newCompany" placeholder="Or enter a new company">
-                </select>
-               
+            <select id="companyName" required>
+                <option value="" disabled selected>Select a company</option>
+            </select>
+            <input type="text" id="newCompany" placeholder="Or enter a new company">
 
             <label for="deliveryDate">Delivery Date:</label>
             <input type="date" id="deliveryDate" required>
