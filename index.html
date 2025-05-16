@@ -83,9 +83,9 @@
     </div>
 
     <script>
-  const appointments = [];
+const appointments = [];
 let deliveryNumber = 1;
-const companies = new Set();
+const companyDropdown = document.getElementById("companyName");
 
 // Populate 24/7 time slots every 30 minutes
 const timeSlotSelect = document.getElementById("timeSlot");
@@ -97,18 +97,21 @@ for (let hour = 0; hour < 24; hour++) {
     }
 }
 
+// Add new trucking companies dynamically
+companyDropdown.addEventListener("change", function () {
+    const newCompany = companyDropdown.value.trim();
+    if (newCompany && !Array.from(companyDropdown.options).some(opt => opt.value === newCompany)) {
+        const newOption = document.createElement("option");
+        newOption.value = newCompany;
+        newOption.textContent = newCompany;
+        companyDropdown.appendChild(newOption);
+    }
+});
+
 document.getElementById("deliveryForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    let companyName = document.getElementById("companyName").value;
-    const newCompany = document.getElementById("newCompany").value.trim();
-
-    if (newCompany) {
-        companyName = newCompany;
-        companies.add(newCompany);
-        updateCompanyDropdown();
-    }
-
+    const companyName = companyDropdown.value;
     if (!companyName) {
         alert("Please select or enter a trucking company.");
         return;
@@ -151,17 +154,6 @@ function updateAppointmentsTable() {
         row.insertCell(4).appendChild(cancelButton);
     });
 }
-
-function updateCompanyDropdown() {
-    const companyDropdown = document.getElementById("companyName");
-    companyDropdown.innerHTML = `<option value="" disabled selected>Select a company</option>`;
-    companies.forEach(company => {
-        companyDropdown.innerHTML += `<option value="${company}">${company}</option>`;
-    });
-}
-
-// Initialize the dropdown list with stored companies
-updateCompanyDropdown();
     </script>
 </body>
 </html>
